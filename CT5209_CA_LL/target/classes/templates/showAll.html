@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>All Petitions</title>
+</head>
+<body>
+
+<nav>
+    <a href="/">Home</a> |
+    <a href="/showAll">View All Petitions</a> |
+    <a href="/create">Create a Petition</a> |
+    <a href="/search">Search Petitions</a>
+</nav>
+
+<h1>All Petitions</h1>
+
+<ul>
+    <th:block th:each="p : ${petitions}">
+        <li>
+            <a th:href="@{'/petition/' + ${p.id}}">
+                <span th:text="${p.title}"></span>
+            </a>
+        </li>
+    </th:block>
+</ul>
+
+</body>
+</html>
