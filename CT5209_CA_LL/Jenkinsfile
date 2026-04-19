@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Get Code from Github') {
+            steps {
+                git branch: 'main', url: 'https://github.com/luke2242/CT5209_CA_LukeLyons.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh './mvnw -B clean package -DskipTests'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                sh './mvnw -B test'
+            }
+        }
+
+        stage('Package and Archive WAR') {
+            steps {
+                sh 'mv target/CT5209_CA_LL-0.0.1-SNAPSHOT.war target/lukespetitions.war'
+                archiveArtifacts artifacts: 'target/lukespetitions.war', fingerprint: true
+            }
+        }
+    }
+}
