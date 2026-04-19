@@ -13,26 +13,21 @@
     <a href="/search">Search Petitions</a>
 </nav>
 
-<h1 th:text="${petition.title}"></h1>
-
-<p th:text="${petition.description}"></p>
+<h1 th:text="${petition.title}">Petition Title</h1>
+<p th:text="${petition.description}">Description</p>
 
 <h2>Signatures</h2>
 <ul>
-    <th:block th:each="s : ${petition.signatures}">
-        <li>
-            <span th:text="${s.name}"></span> -
-            <span th:text="${s.email}"></span>
-        </li>
-    </th:block>
+    <li th:each="sig : ${petition.signatures}">
+        <span th:text="${sig.name}"></span> - <span th:text="${sig.email}"></span>
+    </li>
 </ul>
 
 <h2>Sign this Petition</h2>
-
 <form th:action="@{'/petition/' + ${petition.id} + '/sign'}" method="post">
-    Name: <input type="text" name="name"><br><br>
-    Email: <input type="email" name="email"><br><br>
-    <button type="submit">Sign Petition</button>
+    Name: <input type="text" name="name" required><br>
+    Email: <input type="email" name="email" required><br>
+    <input type="submit" value="Sign">
 </form>
 
 </body>
