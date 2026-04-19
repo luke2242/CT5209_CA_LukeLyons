@@ -1,6 +1,11 @@
 pipeline {
     agent any
 
+    tools {
+        jdk 'jdk17'          
+        maven 'maven3'       
+    }
+
     stages {
 
         stage('Get Code from Github') {
@@ -12,7 +17,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('CT5209_CA_LL') {
-                    sh 'chmod +x ./mvnw && ./mvnw -B clean package -DskipTests'
+                    sh 'mvn clean package -DskipTests'
                 }
             }
         }
@@ -20,7 +25,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('CT5209_CA_LL') {
-                    sh 'chmod +x ./mvnw && ./mvnw -B test'
+                    sh 'mvn test'
                 }
             }
         }
@@ -28,9 +33,10 @@ pipeline {
         stage('Package and Archive WAR') {
             steps {
                 dir('CT5209_CA_LL') {
-                    sh 'mv target/CT5209_CA_LL-0.0.1-SNAPSHOT.war target/lukespetitions.war'
+                    sh 'ls -la target/*.war'
+                    sh 'mv target/*.war target/lukespetitions.war'
+                    archiveArtifacts artifacts: 'target/lukespetitions.war', fingerprint: true
                 }
-                archiveArtifacts artifacts: 'CT5209_CA_LL/target/lukespetitions.war', fingerprint: true
             }
         }
     }
