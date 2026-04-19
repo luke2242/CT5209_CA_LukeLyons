@@ -12,7 +12,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('CT5209_CA_LL') {
-                    sh './mvnw -B clean package -DskipTests'
+                    sh 'chmod +x ./mvnw && ./mvnw -B clean package -DskipTests'
                 }
             }
         }
@@ -20,7 +20,7 @@ pipeline {
         stage('Test') {
             steps {
                 dir('CT5209_CA_LL') {
-                    sh './mvnw -B test'
+                    sh 'chmod +x ./mvnw && ./mvnw -B test'
                 }
             }
         }
